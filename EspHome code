@@ -1,0 +1,105 @@
+substitutions:
+ tank_b: sensor.vvb_temp
+ tank_t: sensor.vvb_temp_2
+ watt: sensor.heavy_duty_switch_electric_consumption_w
+ state: sensor.vvb_state
+
+
+
+esphome:
+  name: skjerm
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+
+
+font:
+  - file: 'arial.ttf' #'slkscr.ttf'
+    id: font1
+    size: 14
+
+ota:
+  password: "*****************"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "skjerm Fallback Hotspot"
+    password: "*************"
+
+captive_portal:
+
+
+dallas:
+  - pin: 2
+
+
+sensor:
+  - platform: dallas
+    address: 0xD13C01F096CAB528
+    name: "Soverom"
+
+  - platform: homeassistant
+    id: tank_b
+    entity_id: sensor.vvb_temp
+    internal: true
+    
+  - platform: homeassistant
+    id: tank_t
+    entity_id: sensor.vvb_temp_2
+    internal: true
+    
+  - platform: homeassistant
+    id: watt
+    entity_id: sensor.heavy_duty_switch_electric_consumption_w
+    internal: true
+    
+binary_sensor:
+  - platform: homeassistant
+    id: state
+    entity_id: switch.heavy_duty_switch
+    internal: true
+spi:
+  clk_pin: GPIO16
+  mosi_pin: GPIO5
+
+display:
+  - platform: ssd1306_spi
+    model: "SSD1306 128x64"
+    cs_pin: GPIO4
+    dc_pin: GPIO0
+    reset_pin: GPIO14
+    lambda: |-
+        if (id(tank_t).has_state()) {
+        it.printf(65, 0, id(font1) , "%7.1f°", id(tank_t).state);
+        }
+        
+        if (id(tank_b).has_state()) {
+        it.printf(65,15, id(font1) , "%7.1f°", id(tank_b).state);
+        }
+        
+        if (id(watt).has_state()) {
+        it.printf(62, 30, id(font1), "%7.1fW", id(watt).state);
+        }
+        
+        
+        
+
+        it.printf(60, 45, id(font1), "State: %s", id(state).state ? "ON" : "OFF");
+         
+        
+        
+        
+        it.print(0, 0, id(font1), "VVB Tank");
+        
+        
