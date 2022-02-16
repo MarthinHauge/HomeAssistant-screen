@@ -15,3 +15,8 @@ EspHome integration
 
 
 <img src="https://user-images.githubusercontent.com/59934514/152115374-f738f1ba-c2f9-4db1-921c-9a584b8af495.PNG" width="500" height="700">
+<img src="https://user-images.githubusercontent.com/59934514/154275032-db852d99-0b19-4d22-b838-647f8264eb6b.PNG" width="500" height="700">
+<img src="https://user-images.githubusercontent.com/59934514/154275054-e0654803-a4e5-48d1-8f9a-9a1f50fa23b8.jpg" width="500" height="700">
+
+
+
