@@ -1,7 +1,7 @@
 
 # HomeAssistant-screen IOT
-Show HomeAssistant entities on a screen with esp8266.
-In this example I am showing temperature and watt consumption from my DS18B20 probes that is attached to the waterheater. 
+Show HomeAssistant entities on a screen with esp8266.  
+In this example I am showing water temperature and watt consumption from my waterheater. DS18B20 probes is attached to the waterheater, and a Aeotec Heavy Duty Smart Switch Gen5 Z-Wave is measuring the watt consumption.
 
 Components needed:  
 -Esp8266  
