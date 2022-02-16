@@ -1,6 +1,8 @@
 substitutions:
- tank_b: sensor.vvb_temp
- tank_t: sensor.vvb_temp_2
+ tank_b: sensor.sensor1_2
+ tank_t: sensor.sensor2
+ vann_inn: sensor.sensor1
+ vann_ut: sensor.sensor4
  watt: sensor.heavy_duty_switch_electric_consumption_w
  state: sensor.vvb_state
 
@@ -26,7 +28,7 @@ font:
     size: 14
 
 ota:
-  password: "*****************"
+  password: "b1587535e576adbe9afb5f933145f06a"
 
 wifi:
   ssid: !secret wifi_ssid
@@ -35,28 +37,69 @@ wifi:
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "skjerm Fallback Hotspot"
-    password: "*************"
+    password: "uOWrMMnT5v9l"
 
 captive_portal:
 
 
 dallas:
-  - pin: 2
+  - pin: GPIO2
+    id: sensor1
+    
+  - pin: GPIO12
+    id: sensor2
+    
+  - pin: GPIO13
+    id: sensor3
+    
+  - pin: GPIO3
+    id: sensor4
+        
 
 
 sensor:
   - platform: dallas
-    address: 0xD13C01F096CAB528
-    name: "Soverom"
+    address: 0xFB19985F1E64FF28
+    name: "sensor1"
+    dallas_id: sensor1
+    
+  - platform: dallas
+    address: 0x613C01F09672C628
+    name: "sensor2"
+    dallas_id: sensor2
+    
+  - platform: dallas
+    address: 0xDF3C01F0966BF228
+    name: "sensor3"
+    dallas_id: sensor3
+    
+  - platform: dallas
+    address: 0x2FBF4B5E1E64FF28
+    name: "sensor4"
+    dallas_id: sensor4
+
+
+
 
   - platform: homeassistant
     id: tank_b
-    entity_id: sensor.vvb_temp
+    entity_id: sensor.sensor1_2
     internal: true
     
   - platform: homeassistant
     id: tank_t
-    entity_id: sensor.vvb_temp_2
+    entity_id: sensor.sensor2
+    internal: true
+    
+    
+  - platform: homeassistant
+    id: vann_inn
+    entity_id: sensor.sensor1
+    internal: true
+    
+  - platform: homeassistant
+    id: vann_ut
+    entity_id: sensor.sensor4
     internal: true
     
   - platform: homeassistant
@@ -81,25 +124,33 @@ display:
     reset_pin: GPIO14
     lambda: |-
         if (id(tank_t).has_state()) {
-        it.printf(65, 0, id(font1) , "%7.1f°", id(tank_t).state);
+        it.printf(75, 35, id(font1) , "T %7.1f°", id(tank_t).state);
         }
         
         if (id(tank_b).has_state()) {
-        it.printf(65,15, id(font1) , "%7.1f°", id(tank_b).state);
+        it.printf(75,50, id(font1) , "B %7.1f°", id(tank_b).state);
         }
         
         if (id(watt).has_state()) {
-        it.printf(62, 30, id(font1), "%7.1fW", id(watt).state);
+        it.printf(62, 15, id(font1), "%7.1fW", id(watt).state);
+        }
+        
+        if (id(vann_inn).has_state()) {
+        it.printf(5, 25, id(font1) , "Inn%7.1f°", id(vann_inn).state);
+        }
+        
+        if (id(vann_ut).has_state()) {
+        it.printf(5,45, id(font1) , "Ut %7.1f°", id(vann_ut).state);
         }
         
         
         
 
-        it.printf(60, 45, id(font1), "State: %s", id(state).state ? "ON" : "OFF");
+        it.printf(90, 0, id(font1), "%s", id(state).state ? "ON" : "OFF");
          
         
         
         
-        it.print(0, 0, id(font1), "VVB Tank");
+        it.print(10, 0, id(font1), "VVB Tank");
         
         
