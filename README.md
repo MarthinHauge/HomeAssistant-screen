@@ -6,6 +6,7 @@ In this example I am showing temperature and watt consumption from my DS18B20 pr
 Components needed:  
 -Esp8266  
 -ssd1306 oled screen  
+-DS18B20
 -F-F wires  
 
 Software needed:  
