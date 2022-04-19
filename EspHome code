@@ -6,7 +6,7 @@ substitutions:
  watt: sensor.heavy_duty_switch_electric_consumption_w
  state: sensor.vvb_state
 
-
+tester
 
 esphome:
   name: skjerm
